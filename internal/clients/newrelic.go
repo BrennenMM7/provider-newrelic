@@ -15,7 +15,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/terraform"
 
-	"github.com/upbound/upjet-provider-template/apis/v1beta1"
+	"github.com/BrennenMM7/provider-newrelic/apis/v1beta1"
 )
 
 const (
@@ -24,7 +24,11 @@ const (
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
+	errUnmarshalCredentials = "cannot unmarshal newrelic credentials as JSON"
+
+	account_id = ""
+	api_key    = ""
+	region     = ""
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -67,6 +71,17 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			"username": creds["username"],
 			"password": creds["password"],
 		}*/
+
+		ps.Configuration = map[string]any{}
+		if v, ok := creds[account_id]; ok {
+			ps.Configuration[account_id] = v
+		}
+		if v, ok := creds[api_key]; ok {
+			ps.Configuration[api_key] = v
+		}
+		if v, ok := creds[region]; ok {
+			ps.Configuration[region] = v
+		}
 		return ps, nil
 	}
 }

@@ -10,12 +10,12 @@ import (
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
-	"github.com/upbound/upjet-provider-template/config/null"
+	"github.com/BrennenMM7/provider-newrelic/config/alertchannel"
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/upbound/upjet-provider-template"
+	resourcePrefix = "newrelic"
+	modulePath     = "github.com/BrennenMM7/provider-newrelic"
 )
 
 //go:embed schema.json
@@ -34,7 +34,7 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		alertchannel.Configure,
 	} {
 		configure(pc)
 	}
